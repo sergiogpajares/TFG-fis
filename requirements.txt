@@ -1,0 +1,12 @@
+# Versions are lastes version at the moment of creating the project
+
+# general scientific packages
+numpy>=1.26.4
+matplotlib>=3.8.3
+
+# Jupyter Notebools
+ipykernel >= 1.26.4
+
+# Machine leaning
+albumentations>=1.4.2
+assets/libraries/opencv-4.9.0-py3-none-any.whl #opencv2 >= 4.9.0
