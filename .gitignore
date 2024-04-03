@@ -1,5 +1,8 @@
 # Custom project
 dataset/
+models/
+logs/
+*.jpg # exported images
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
