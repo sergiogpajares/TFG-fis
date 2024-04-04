@@ -3,6 +3,7 @@ dataset/
 models/
 logs/
 *.jpg # exported images
+logs_old
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
