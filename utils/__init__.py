@@ -15,8 +15,38 @@ __all__ = [
     'display',
     'draw_grid',
     'augmented_display',
-    'multipredict'
+    'multipredict',
+    'read_image',
 ]
+
+def read_image(image_path:str,shape:Union[List[int],Tuple[int,int,int]]) -> tf.Tensor:
+    '''
+    Read image from its path. Returns an uint8 tensor.
+
+    Params
+    -------
+        image_path: str
+    Path to the image to open
+
+        shape
+    Tuple or list with (width, height, channels). If 
+    the image shape doesn't have the specified width
+    and height it will be resized.
+
+    Returns
+    --------
+        tensor (width, height, channels) with the image in RGB format
+    '''
+    if len(shape)!=3:
+        raise ValueError("The shape must be a tuple/list (width,height,channels)") 
+
+    image = tf.io.read_file(image_path)
+    image = tf.image.decode_png(image, channels=shape[2])
+    image.set_shape([None, None, shape[2]])
+    image = tf.image.resize(images=image, size=shape[0:2])
+    image = tf.cast(image, dtype=tf.uint8)
+
+    return image
 
 def display(images:Union[List[Union[np.ndarray,str]],str,np.ndarray],ncols:int=3) -> None:
     '''
@@ -112,20 +142,6 @@ def draw_grid(im:np.ndarray, grid_size:int) -> np.ndarray:
         cv2.line(im, (0, j), (im.shape[1], j), color=(255,))
     return im
 
-def read_image(image_path:str,shape:Union[List[int],Tuple[int,int,int]]) -> tf.Tensor:
-    '''
-    Read image from its path. Returns an uint8 tensor.
-    '''
-    if len(shape)!=3:
-        raise ValueError("The shape must be a tuple/list (width,height,channels)") 
-
-    image = tf.io.read_file(image_path)
-    image = tf.image.decode_png(image, channels=shape[2])
-    image.set_shape([None, None, shape[2]])
-    image = tf.image.resize(images=image, size=shape[0:2])
-    image = tf.cast(image, dtype=tf.uint8)
-
-    return image
 
 def color_map(mask:tf.Tensor) -> np.ndarray:
     '''
@@ -154,7 +170,16 @@ def multipredict(img_list:List[str],mask_list:List[str],model:tf.keras.Model) ->
     fig, ax = plt.subplots(len(img_list),3,figsize=(12,4*len(img_list)+3))
     index = 0 # row counter
     for img_path, mask_path in zip(img_list,mask_list):
-        img = read_image(img_path,model.input.shape[1:])
+        try: 
+            # "When loading the model with tf.keras.models.load_model( )
+            # the model.input is a list with a single element. A list
+            # doesn't have shape attribute. When defining the model from
+            # scratch, model.input is the input layer
+            shape = model.input.shape[1:]
+        except AttributeError:
+            shape = model.input[0].shape[1:]
+
+        img = read_image(img_path,shape)
         ax[index,0].imshow( img )
         ax[index,0].set_xticks([])
         ax[index,0].set_yticks([])
@@ -164,7 +189,7 @@ def multipredict(img_list:List[str],mask_list:List[str],model:tf.keras.Model) ->
         ax[index,1].set_xticks([])
         ax[index,1].set_yticks([])
         
-        ax[index,2].imshow(color_map(read_image(mask_path,model.input.shape[1:])[:,:,0]))
+        ax[index,2].imshow(color_map(read_image(mask_path,shape)[:,:,0]))
         ax[index,2].set_xticks([])
         ax[index,2].set_yticks([])
         
