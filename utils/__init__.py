@@ -17,6 +17,7 @@ __all__ = [
     'augmented_display',
     'multipredict',
     'read_image',
+    'color_list'
 ]
 
 def read_image(image_path:str,shape:Union[List[int],Tuple[int,int,int]]) -> tf.Tensor:
@@ -142,16 +143,23 @@ def draw_grid(im:np.ndarray, grid_size:int) -> np.ndarray:
         cv2.line(im, (0, j), (im.shape[1], j), color=(255,))
     return im
 
+color_list = [
+    (0,0,0), # black
+    (92, 179, 255), # clear blue
+    (255, 243, 245), # shiny gray
+    (113, 125, 150), # deep gray
+    (255, 242, 0),
+]
 
 def color_map(mask:tf.Tensor) -> np.ndarray:
     '''
     Turn an 1-encoded gray image into a colored image
     '''
-    background_color = (0,0,0) # black
-    clear_sky = (92, 179, 255) # clear blue
-    thin_cloud = (255, 243, 245) # shiny gray
-    tick_cloud = (113, 125, 150) # deep gray
-    sun = (255, 242, 0) # yellow
+    background_color = color_list[0] 
+    clear_sky = color_list[1] 
+    thin_cloud =  color_list[2] 
+    tick_cloud =  color_list[3] 
+    sun = color_list[4]
     
     colored_image = np.empty((mask.shape[0],mask.shape[1],3),dtype=np.uint8)
     

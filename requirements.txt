@@ -10,4 +10,5 @@ ipykernel >= 1.26.4
 # Machine leaning
 albumentations>=1.4.2
 tensorflow==2.16.1
+sklearn >= 1.4.2
 assets/libraries/opencv-4.9.0-py3-none-any.whl #opencv2 >= 4.9.0
