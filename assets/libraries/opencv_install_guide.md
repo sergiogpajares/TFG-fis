@@ -90,7 +90,7 @@ Instead use
 sudo apt-get install libcudnn8-dev
 ```
 
-> warning:
+> [!WARNING]
 > I got some question about how I managed to get it working. I had to include
 `cmake -DCUDNN_LIBRARY=/usr/lib/x86_64-linux-gnu/libcudnn.so.8 -DCUDNN_INCLUDE_DIR=/usr/include/ ..`
 
@@ -163,13 +163,13 @@ Check your `CuDNN` path using
 find cudnn /usr/ | grep cudnn
 ```
 
-After configuring the project run `make`. Remember to use the `-j <number of threads>`. Yo can check how many threads you can run in parallel using `lscpu`. In case 12:
+After configuring the project run `make`. Remember to use the `-j <number of threads>`. Yo can check how many threads you can run in parallel using `lscpu`. In my case 12:
 ```bash
-make -j12
+make -j4
 ```
 The building process is quite slow and it can take up to 8 hours to complete. However, on a very fast computer you can expect a compiling time of ~1 h. Some slower PC may take 2-4 hours.
 
-> warning: **Make sure you got enough memory**
+> [!WARNING] **Make sure you got enough memory**
 > At the end of the process, when building the python binding a huge amout of RAM memory is requiered, about 4 Gb. If you get a compiler error it may be due to a runout of memory in the system. If this happens you must enlarge (or create) your swap memory. If you're running a Jetson Nano you'll run out of memory.
 
 We will move into the folder `python_loader` that will contain

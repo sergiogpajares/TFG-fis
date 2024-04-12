@@ -1,4 +1,4 @@
-# Versions are lastes version at the moment of creating the project
+# Versions are latest version at the moment of creating the project
 
 # general scientific packages
 numpy>=1.26.4
@@ -11,4 +11,4 @@ ipykernel >= 1.26.4
 albumentations>=1.4.2
 tensorflow==2.16.1
 sklearn >= 1.4.2
-assets/libraries/opencv-4.9.0-py3-none-any.whl #opencv2 >= 4.9.0
+cv2 >= 4.9.0 # comment this line and use your own CUDA and CuDNN enabled build of OpenCV
