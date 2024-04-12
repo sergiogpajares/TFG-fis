@@ -20,7 +20,7 @@ __all__ = [
     'color_list'
 ]
 
-def read_image(image_path:str,shape:Union[List[int],Tuple[int,int,int]]) -> tf.Tensor:
+def read_image(image_path:str,shape:Union[List[int],Tuple[int,int,int],None]=None) -> tf.Tensor:
     '''
     Read image from its path. Returns an uint8 tensor.
 
@@ -38,14 +38,19 @@ def read_image(image_path:str,shape:Union[List[int],Tuple[int,int,int]]) -> tf.T
     --------
         tensor (width, height, channels) with the image in RGB format
     '''
-    if len(shape)!=3:
-        raise ValueError("The shape must be a tuple/list (width,height,channels)") 
+    if shape is not None:
+        if len(shape)!=3:
+            raise ValueError("The shape must be a tuple/list (width,height,channels)") 
 
     image = tf.io.read_file(image_path)
-    image = tf.image.decode_png(image, channels=shape[2])
-    image.set_shape([None, None, shape[2]])
-    image = tf.image.resize(images=image, size=shape[0:2])
-    image = tf.cast(image, dtype=tf.uint8)
+    if shape is not None:
+        image = tf.image.decode_png(image, channels=shape[2])
+        image.set_shape([None, None, shape[2]])
+        image = tf.image.resize(images=image, size=shape[0:2])
+        image = tf.cast(image, dtype=tf.uint8)
+    else:
+        image = tf.image.decode_image(image,dtype=tf.uint8)
+
 
     return image
 
@@ -107,13 +112,13 @@ def augmented_display(image:np.ndarray, mask:np.ndarray, original_image:Union[np
     fontsize = 18
 
     if original_image is None and original_mask is None:
-        f, ax = plt.subplots(2, 1, figsize=(8, 8))
+        f, ax = plt.subplots(1, 2, figsize=(8, 8))
 
         ax[0].imshow(image)
         ax[0].axis('off')
 
-        ax[1].imshow(mask)
-        ax[0].axis('off')
+        ax[1].imshow(color_map(mask))
+        ax[1].axis('off')
     else:
         f, ax = plt.subplots(2, 2, figsize=(8, 8))
 
@@ -121,7 +126,7 @@ def augmented_display(image:np.ndarray, mask:np.ndarray, original_image:Union[np
         ax[0, 0].set_title('Original image', fontsize=fontsize)
         ax[0,0].axis('off')
 
-        ax[1, 0].imshow(original_mask)
+        ax[1, 0].imshow(color_map(original_mask))
         ax[1, 0].set_title('Original mask', fontsize=fontsize)
         ax[1,0].axis('off')
 
@@ -129,7 +134,7 @@ def augmented_display(image:np.ndarray, mask:np.ndarray, original_image:Union[np
         ax[0, 1].set_title('Transformed image', fontsize=fontsize)
         ax[0,1].axis('off')
 
-        ax[1, 1].imshow(mask)
+        ax[1, 1].imshow(color_map(mask))
         ax[1, 1].set_title('Transformed mask', fontsize=fontsize)
         ax[1,1].axis('off')
     
