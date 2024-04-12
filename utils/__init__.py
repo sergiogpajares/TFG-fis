@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import cv2
 import tensorflow as tf
 
-from loading import read_image
+from .loading import read_image
 
 import os
 from typing import List, Tuple, Union
