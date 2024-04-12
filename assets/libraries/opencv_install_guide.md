@@ -169,7 +169,8 @@ make -j4
 ```
 The building process is quite slow and it can take up to 8 hours to complete. However, on a very fast computer you can expect a compiling time of ~1 h. Some slower PC may take 2-4 hours.
 
-> [!WARNING] **Make sure you got enough memory**
+> [!WARNING]
+> **Make sure you got enough memory**
 > At the end of the process, when building the python binding a huge amout of RAM memory is requiered, about 4 Gb. If you get a compiler error it may be due to a runout of memory in the system. If this happens you must enlarge (or create) your swap memory. If you're running a Jetson Nano you'll run out of memory.
 
 We will move into the folder `python_loader` that will contain
