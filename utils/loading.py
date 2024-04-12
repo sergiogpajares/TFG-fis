@@ -10,11 +10,45 @@ This submodule contains some requiered functions to generate a TensorFlow datase
 '''
 
 __all__ = [
+    'read_image',
     'read_mask',
     'data_generator',
     'map_weights'
 ]
 
+def read_image(image_path:str,shape:Union[List[int],Tuple[int,int,int],None]=None) -> tf.Tensor:
+    '''
+    Read image from its path. Returns an uint8 tensor.
+
+    Params
+    -------
+        image_path: str
+    Path to the image to open
+
+        shape
+    Tuple or list with (width, height, channels). If 
+    the image shape doesn't have the specified width
+    and height it will be resized.
+
+    Returns
+    --------
+        tensor (width, height, channels) with the image in RGB format
+    '''
+    if shape is not None:
+        if len(shape)!=3:
+            raise ValueError("The shape must be a tuple/list (width,height,channels)") 
+
+    image = tf.io.read_file(image_path)
+    if shape is not None:
+        image = tf.image.decode_png(image, channels=shape[2])
+        image.set_shape([None, None, shape[2]])
+        image = tf.image.resize(images=image, size=shape[0:2])
+        image = tf.cast(image, dtype=tf.uint8)
+    else:
+        image = tf.image.decode_image(image,dtype=tf.uint8)
+
+
+    return image
 
 def read_mask(mask_path:str, num_classes:int, img_shape:Union[List[int],Tuple[int,int,int]]) -> tf.Tensor:
     '''

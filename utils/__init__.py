@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import cv2
 import tensorflow as tf
 
+from loading import read_image
+
 import os
 from typing import List, Tuple, Union
 
@@ -19,40 +21,6 @@ __all__ = [
     'read_image',
     'color_list'
 ]
-
-def read_image(image_path:str,shape:Union[List[int],Tuple[int,int,int],None]=None) -> tf.Tensor:
-    '''
-    Read image from its path. Returns an uint8 tensor.
-
-    Params
-    -------
-        image_path: str
-    Path to the image to open
-
-        shape
-    Tuple or list with (width, height, channels). If 
-    the image shape doesn't have the specified width
-    and height it will be resized.
-
-    Returns
-    --------
-        tensor (width, height, channels) with the image in RGB format
-    '''
-    if shape is not None:
-        if len(shape)!=3:
-            raise ValueError("The shape must be a tuple/list (width,height,channels)") 
-
-    image = tf.io.read_file(image_path)
-    if shape is not None:
-        image = tf.image.decode_png(image, channels=shape[2])
-        image.set_shape([None, None, shape[2]])
-        image = tf.image.resize(images=image, size=shape[0:2])
-        image = tf.cast(image, dtype=tf.uint8)
-    else:
-        image = tf.image.decode_image(image,dtype=tf.uint8)
-
-
-    return image
 
 def display(images:Union[List[Union[np.ndarray,str]],str,np.ndarray],ncols:int=3) -> None:
     '''
