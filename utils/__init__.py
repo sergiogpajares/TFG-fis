@@ -118,10 +118,10 @@ def draw_grid(im:np.ndarray, grid_size:int) -> np.ndarray:
 
 color_list = [
     (0,0,0), # black
-    (92, 179, 255), # clear blue
-    (113, 125, 150), # deep gray
-    (255, 243, 245), # shiny gray
-    (255, 242, 0),
+    (23, 86, 194), # sky
+    (92, 147, 242), # thin cloud
+    (245, 245, 245), # tick cloud
+    (255, 157, 10), # sun
 ]
 
 def color_map(mask:Union[tf.Tensor,np.ndarray]) -> np.ndarray:
