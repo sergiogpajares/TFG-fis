@@ -119,12 +119,12 @@ def draw_grid(im:np.ndarray, grid_size:int) -> np.ndarray:
 color_list = [
     (0,0,0), # black
     (92, 179, 255), # clear blue
-    (255, 243, 245), # shiny gray
     (113, 125, 150), # deep gray
+    (255, 243, 245), # shiny gray
     (255, 242, 0),
 ]
 
-def color_map(mask:tf.Tensor) -> np.ndarray:
+def color_map(mask:Union[tf.Tensor,np.ndarray]) -> np.ndarray:
     '''
     Turn an 1-encoded gray image into a colored image
     '''

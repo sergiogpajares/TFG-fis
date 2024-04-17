@@ -69,10 +69,10 @@ def read_image(
             image = tf.image.decode_image(image,dtype=tf.uint8)
     
     elif backend == 'cv2':
-        image, ret = cv2.imread(image_path)
-        if ret:
+        image = cv2.imread(image_path)
+        if image is None:
             raise RuntimeError("Image could not be read")
-        image = cv2.cvtColor(cv2.COLOR_BGR2RGB)
+        image = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
         if shape is not None:
             image = cv2.resize(image,shape[:2],interpolation=cv2.INTER_NEAREST)
 
