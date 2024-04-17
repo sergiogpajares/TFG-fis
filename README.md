@@ -72,22 +72,22 @@ TFG-fis
  |     ├── __init__.py
  |     ├── augmentation.py 
  |     └── loading.py
- ├── augmentation.py
  ├── trainVGG16unet.ipynb
  ├── metrics.ipynb
  ├── README.md
  └── .gitignore
 ```
+> [!ALERT]
+> The **dataset** is not publicly available at the moment. It is property of the [GOA](https://goa.uva.es/) research group. More about them at their webpage. You can also see the stations and some realtime images in their [webpage](https://goa.uva.es/proyecto-presente/). `train.txt`, `val.txt` and `test.txt` contain a list of filename to be used for training, validation and testing respectively.
 
-The **dataset** is not publicly available at the moment. It is property of the [GOA](https://goa.uva.es/) research group. More about them at their webpage. You can also see the stations and some realtime images in their [webpage](https://goa.uva.es/proyecto-presente/). `train.txt`, `val.txt` and `test.txt` contain a list of filename to be used for training, validation and testing respectively.
-
-A pre-trained **model** can be found in [kaggle](https://www.kaggle.com/models/sergiogarciapajares/vggcloudunet).
+> [!ALERT]
+> A pre-trained **model** can be found in [kaggle](https://www.kaggle.com/models/sergiogarciapajares/vggcloudunet). It can't be found within the github respository (due to size limitations).
 
 ## Usage guide
 
 ### Data augmentation
-`augmentation.py` is a CLI util to augment images based on the `albumentations` library
-```bash
+`utils/augmentation.py` is a CLI util to augment images based on the `albumentations` library
+```
 usage: augmentation.py [-h] [-n NIMAGES] [--limit LIMIT] [--img-extension {jpg,png}] [--mask-extension {jpg,png}]
                        [--n-threads N_THREADS] [--remove]
                        {train,val}
@@ -111,7 +111,7 @@ options:
   --remove              Remove previous images in the augmentation folders
 ```
 ### Training 
-Training and model definition is performed in `trainVGG16unet.ipynb`. More information in that file.
+Training and model definition is performed in `trainVGG16unet.ipynb`. More information within that file.
 
 ### Validation
 Validation is performed in `metrics.ipynb`. More information in that file.
