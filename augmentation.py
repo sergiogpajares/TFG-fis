@@ -17,10 +17,33 @@ parser = argparse.ArgumentParser(
     description="Generate augmented images for train or validation according to mocked into the src code"
 )
 
-parser.add_argument("target",
+parser.add_argument("--target",
     action='store',
     choices=['train','val'],
-    help='Wheater to generate train or val augmented images',
+    help='Wheater to generate train or val augmented images. It chooses folder automatically. If not provided, --in and --out must be used',
+    default=None,
+    required=False
+)
+
+parser.add_argument('-i','--in',
+    action='store',
+    help="Input path to a file or directory. If target is provided it will be ignored.",
+    default=None,
+    required='False',
+)
+
+parser.add_argument('-o','--out-img',
+    action='store',
+    help="Path to a directory to save the images. If target is provided it will be ignored.",
+    default=None,
+    required=False,
+)
+
+parser.add_argument('--out-mask',
+    action='store',
+    help="Path to a directory to save the masks, can be omitted. If target is provided it will be ignored.",
+    default=None,
+    required=False,
 )
 
 parser.add_argument('-n','--nimages',
@@ -71,21 +94,35 @@ args = vars(parser.parse_args())
 
 ##########################
 ## CONSTANTS
-IMAGES_DIR = os.path.join("dataset","images") # original images
-MASKS_DIR = os.path.join("dataset","masks") # original images
+if args['target'] is not None:
+    isdir = True
+    IMAGES_DIR = os.path.join("dataset","images") # original images
+    MASKS_DIR = os.path.join("dataset","masks") # original images
 
-WIDTH  = 2000 # original images width
-HEIGHT = 2000 # original images height
+    if args['target']=='train':
+        NAME_LIST = os.path.join("dataset","train.txt")
+        AUGMENTED_IMAGES_DIR = os.path.join("dataset","augmented_images_train")
+        AUGMENTED_MASKS_DIR = os.path.join("dataset","augmented_masks_train")
+        
+    elif args['target']=='val':
+        NAME_LIST = os.path.join("dataset","val.txt")
+        AUGMENTED_IMAGES_DIR = os.path.join("dataset","augmented_images_val")
+        AUGMENTED_MASKS_DIR = os.path.join("dataset","augmented_masks_val")
+    else:
+        print("[ERROR] Target must either be 'train' or 'val'")
+        exit(-1)
+elif args['in'] is not None and args['out-img'] is not None:
+    if os.path.isdir(args['in']):
+        isdir = True
 
-if args['target']=='train':
-    NAME_LIST = os.path.join("dataset","train.txt")
-    AUGMENTED_IMAGES_DIR = os.path.join("dataset","augmented_images_train")
-    AUGMENTED_MASKS_DIR = os.path.join("dataset","augmented_masks_train")
-    
-elif args['target']=='val':
-    NAME_LIST = os.path.join("dataset","val.txt")
-    AUGMENTED_IMAGES_DIR = os.path.join("dataset","augmented_images_val")
-    AUGMENTED_MASKS_DIR = os.path.join("dataset","augmented_masks_val")
+    elif os.path.isfile(args['in']):
+        isdir = False
+    else:
+        print("[ERROR] --in must be either a file or a path")
+        exit(-1)
+else:
+    print("A target or --in and --out-img must be provided")
+    exit(-1)
 
 # execution parameters
 NUM_THREADS = args['n_threads']
