@@ -45,6 +45,25 @@ Dependencies can be installed from the `requirements.txt`. But, `opencv>=4.9.0` 
 pip install -r requirements.txt
 ```
 
+### Using LaTeX with MatPlotLib
+
+To be able to use LaTeX along with `Matplotlib` some additional system packages are requiered. I use `texlive` LaTeX distributions. Some windows users may prefer using `miktex` distribution.
+```bash
+sudo apt-get install texlive-latex-extra dvipng cm-super --assume-yes
+```
+Also, if using language support
+```bash
+sudo apt-get install texlive-lang-spanish
+```
+
+If you don't want LaTeX to be used, please comment the following lines at the top of the code files
+```python
+matplotlib.rcParams.update({
+    'text.usetex' : True,
+    'text.latex.preamble' : r'\usepackage[spanish,es-tabla]{babel}\decimalpoint\usepackage{amsmath}\usepackage{amsfonts}\usepackage{amssymb}'
+}) 
+```
+
 ## Project structure
 The project have the following folder structure
 
@@ -70,11 +89,13 @@ TFG-fis
  |    └── Checkpoints
  ├── utils
  |     ├── __init__.py
- |     ├── augmentation.py 
  |     └── loading.py
  ├── trainVGG16unet.ipynb
  ├── metrics.ipynb
+ ├── augmentation.py
+ ├── mask_painter.py 
  ├── README.md
+ ├── LICENSE
  └── .gitignore
 ```
 > [!ALERT]
@@ -87,6 +108,7 @@ TFG-fis
 
 ### Data augmentation
 `utils/augmentation.py` is a CLI util to augment images based on the `albumentations` library
+
 ```
 usage: augmentation.py [-h] [-n NIMAGES] [--limit LIMIT] [--img-extension {jpg,png}] [--mask-extension {jpg,png}]
                        [--n-threads N_THREADS] [--remove]
