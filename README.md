@@ -4,6 +4,11 @@ This is the codebase on which my Honour's Project (in spanish Trabajo de Fin de 
 
 The project creates and trains a Convolutional Neural Networks for multi-class semantic segmentation of whole-sky ground images for scientific proposes.
 
+An encoder-decoder architecture is used. VGG16 is chosen as a decoder and a similar mirror-like decoder is used. It generates probability maps for each category:
+![model_architecture](assets/model/Model.png)
+Then, the most likely category is chosen to generate a final mask:
+![model_argmax](assets/model/ModelArgMax.png)
+
 ## Installation guide
 
 Installation is given for a UNIX-like system. On a windows machine, the setup would be similar but some of the given commands will be different. For development, Ubuntu 22.04.4 has been used.
