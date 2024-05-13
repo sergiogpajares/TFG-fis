@@ -13,7 +13,7 @@ Then, the most likely category is chosen to generate a final mask:
 
 Installation is given for a UNIX-like system. On a windows machine, the setup would be similar but some of the given commands will be different. For development, Ubuntu 22.04.4 has been used.
 
-> [!IMPORTANT]
+> [!TIP]
 > To benefit the most, you should have an NVIDIA graphic card properly setup on your computer.
 > If you're not sure weather you have one, run `nvidia-smi`.
 > Also, you'll need to have `CuDNN 8.9.9` or higher. At the time of writing `CuDNN 4.9.0` is not supported by TensorFlow. `TensorRT`is recommended but not required. I have not used it.
@@ -43,7 +43,7 @@ source venv/bin/activate
 and deactivated with `deactivate`. Most IDEs, like VS code, will automatically open the venv on project opening.
 
 Dependencies can be installed from the `requirements.txt`. But, `opencv>=4.9.0` is not provided in this file.
-> [!NOTE]
+> [!TIP]
 > **OpenCV 4.9.0** If you want to benefit from GPU accelerated computations on OpenCV, you must compile it from scratch with CUDA and CuDNN support. Please refer to [OpenCV Installation Guide](assets/libraries/opencv_install_guide.md) to find guidance on it. If using your own 
 
 ```bash
@@ -60,8 +60,8 @@ Also, if using language support
 ```bash
 sudo apt-get install texlive-lang-spanish
 ```
-
-If you don't want LaTeX to be used, please comment the following lines at the top of the code files
+> [!IMPORTANT]
+> If you don't want LaTeX to be used, please comment the following lines at the top of the code files:
 ```python
 matplotlib.rcParams.update({
     'text.usetex' : True,
@@ -103,10 +103,10 @@ TFG-fis
  ├── LICENSE
  └── .gitignore
 ```
-> [!ALERT]
+> [!IMPORTANT]
 > The **dataset** is not publicly available at the moment. It is property of the [GOA](https://goa.uva.es/) research group. More about them at their webpage. You can also see the stations and some realtime images in their [webpage](https://goa.uva.es/proyecto-presente/). `train.txt`, `val.txt` and `test.txt` contain a list of filename to be used for training, validation and testing respectively.
 
-> [!ALERT]
+> [!TIP]
 > A pre-trained **model** can be found in [kaggle](https://www.kaggle.com/models/sergiogarciapajares/vggcloudunet). It can't be found within the github respository (due to size limitations).
 
 ## Usage guide
