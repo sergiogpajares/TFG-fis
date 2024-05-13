@@ -104,10 +104,10 @@ TFG-fis
  └── .gitignore
 ```
 > [!IMPORTANT]
-> The **dataset** is not publicly available at the moment. It is property of the [GOA](https://goa.uva.es/) research group. More about them at their webpage. You can also see the stations and some realtime images in their [webpage](https://goa.uva.es/proyecto-presente/). `train.txt`, `val.txt` and `test.txt` contain a list of filename to be used for training, validation and testing respectively.
+> The **dataset** is not publicly available at the moment. It is property of the [GOA](https://goa.uva.es/) research group. More about them at their webpage. You can also see the stations and some realtime images in their [webpage](https://goa.uva.es/proyecto-presente/). `train.txt`, `val.txt` and `test.txt` contain a list of filenames to be used for training, validation and testing respectively.
 
 > [!TIP]
-> A pre-trained **model** can be found in [kaggle](https://www.kaggle.com/models/sergiogarciapajares/vggcloudunet). It can't be found within the github respository (due to size limitations).
+> A pre-trained **model** can be found in [kaggle](https://www.kaggle.com/models/sergiogarciapajares/vggcloudunet). It can't be found within the github respository (due to size constrains).
 
 ## Usage guide
 
